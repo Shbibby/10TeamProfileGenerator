@@ -1,6 +1,9 @@
 const Manager = require("./lib/Manager");
+  const managerTemplate = require("./templates/manager");
 const Engineer = require("./lib/Engineer");
+  const managerTemplate = require("./templates/engineer");
 const Intern = require("./lib/Intern");
+  const managerTemplate = require("./templates/intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
