@@ -37,23 +37,23 @@ class AskInfo {
     // all employees use this template
 
     // specific employee-type questions
-      this.intern = this.employeeQuestions + {
+      this.intern = this.employeeQuestions.concat([{
         type: "input",
         message: "What is the intern's school name?",
         name: "school"
-      }
+      }])
 
-      this.engineer = this.employeeQuestions + {
+      this.engineer = this.employeeQuestions.concat([{
         type: "input",
         message: "What is the engineer's GitHub?",
         name: "github"
-      }
+      }])
 
-      this.manager = this.employeeQuestions + {
+      this.manager = this.employeeQuestions.concat([{
         type: "input",
         message: "What is the manager's office number?",
         name: "officeNumber"
-      }
+      }])
     // specific employee-type questions
 
   }
@@ -100,9 +100,6 @@ class AskInfo {
       .then(answers => {
         
       })
-      .catch(error => {
-        if(error.isTtyError) {throw error};
-      });
     //inquirer end
   }
 
@@ -110,8 +107,8 @@ class AskInfo {
 
 
 const gh = new AskInfo();
-const yt = gh.whichEmployee();
-console.log(yt);
+
+console.log(gh.intern);
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
