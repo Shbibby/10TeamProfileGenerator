@@ -55,7 +55,6 @@ class AskInfo {
         name: "officeNumber"
       }])
     // specific employee-type questions
-
   }
 
   async whichEmployee() {
@@ -66,49 +65,52 @@ class AskInfo {
         name: "employee",
         choices: ["intern", "engineer", "manager", "exit"]
       }])
-      .then(answers => {
-        if (answers.employee === "exit") {
-          this.boolAddEmployee = false;
-        }
-        this.employeesArray += answers.employee;
-      })
     //inquirer end
   }
 
-  evaluateUserAnswer(answer) {
-    if (answer === "exit") {
-      return false;
-    } else return answer;
+  // asks user and returns array of employees
+  makeEmployeeArray() {
+    let boolContinue = true;
+    let employeeArr = [];
+    let ans;
+    while (boolContinue) {
+      ans = this.whichEmployee();
+      if (ans === "exit") {
+        boolContinue = false;
+        return employeeArr;
+      } else {
+        employeeArr.push(ans.employee);
+      }
+    }
   }
-  
-  makeEmployeePage() {
+  // asks user and returns array of employees
 
-  }
-
-  async askUserEmployeeQuestions(employeeArr) {
+  // intakes employee array and asks questions based on employee
+  async askUserEmployeeQuestions(employeeArrIndex) {
     let questions = {};
-    if (employeeArr === "intern") {
+    if (employeeArrIndex === "intern") {
       questions = this.intern;
-    } else if (employeeArr === "engineer") {
+    } else if (employeeArrIndex === "engineer") {
       questions = this.engineer;
-    } else if (employeeArr === "manager") {
+    } else if (employeeArrIndex === "manager") {
       questions = this.manager;
     }
     
     return inquirer
       .prompt(questions)
-      .then(answers => {
-        
-      })
     //inquirer end
   }
+  // intakes employee array and asks questions based on employee
+
+
+
 
 }
 
 
 const gh = new AskInfo();
-
-console.log(gh.intern);
+let op = gh.whichEmployee();
+console.log(op.employee);
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
