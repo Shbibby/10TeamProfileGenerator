@@ -56,17 +56,6 @@ class AskInfo {
       }
     // specific employee-type questions
 
-    // placeholder to set equal to specified employee type
-      this.promptQuestions = {};
-    // placeholder to set equal to specified employee type
-
-    // array to save employees user wants to choose
-      this.employeesArray = [];
-    // array to save employees user wants to choose
-
-    // contains data for if user wants to continue adding employees
-      this.boolAddEmployee = true;
-    // contains data for if user wants to continue adding employees
   }
 
   async whichEmployee() {
@@ -78,22 +67,33 @@ class AskInfo {
         choices: ["intern", "engineer", "manager", "exit"]
       }])
       .then(answers => {
+        if (answers.employee === "exit") {
+          this.boolAddEmployee = false;
+        }
         this.employeesArray += answers.employee;
       })
     //inquirer end
   }
 
-  async askUser(title) {
+  evaluateUserAnswer(answer) {
+    if (answer === "exit") {
+      return false;
+    } else return answer;
+  }
+  
+  makeEmployeePage() {
+
+  }
+
+  async askUserEmployeeQuestions(employeeArr) {
     let questions = {};
-    if (title.toLowerCase() === "intern") {
+    if (employeeArr === "intern") {
       questions = this.intern;
-    } else if (title.toLowerCase() === "engineer") {
+    } else if (employeeArr === "engineer") {
       questions = this.engineer;
-    } else if (title.toLowerCase() === "manager") {
+    } else if (employeeArr === "manager") {
       questions = this.manager;
-    } else if (title.toLowerCase() === "exit") {
-      this.boolAddEmployee = false;
-    } else {console.log(`something broke in askUser...`)}
+    }
     
     return inquirer
       .prompt(questions)
