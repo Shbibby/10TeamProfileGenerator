@@ -15,94 +15,114 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 class AskInfo {
-  constructor() {
-    this.employeeQuestions = [
+  // constructor start
+    constructor() {
+      this.employeeQuestions = [
+        // all employees use this template
+          {
+            type: "input",
+            message: "What is the employee's name?",
+            name: "name"
+          },
+          {
+            type: "input",
+            message: "What is the employee's id?",
+            name: "id"
+          },
+          {
+            type: "input",
+            message: "What is the employee's email?",
+            name: "email"
+          }
+        ];
       // all employees use this template
-        {
+
+      // specific employee-type questions
+        this.intern = this.employeeQuestions.concat([{
           type: "input",
-          message: "What is the employee's name?",
-          name: "name"
-        },
-        {
+          message: "What is the intern's school name?",
+          name: "school"
+        }])
+
+        this.engineer = this.employeeQuestions.concat([{
           type: "input",
-          message: "What is the employee's id?",
-          name: "id"
-        },
-        {
+          message: "What is the engineer's GitHub?",
+          name: "github"
+        }])
+
+        this.manager = this.employeeQuestions.concat([{
           type: "input",
-          message: "What is the employee's email?",
-          name: "email"
-        }
-      ];
-    // all employees use this template
+          message: "What is the manager's office number?",
+          name: "officeNumber"
+        }])
+      // specific employee-type questions
+    }
+  // constructor end
 
-    // specific employee-type questions
-      this.intern = this.employeeQuestions.concat([{
-        type: "input",
-        message: "What is the intern's school name?",
-        name: "school"
-      }])
+  // asks user which employee type to add
+    async whichEmployee() {
+      return inquirer
+        .prompt([{
+          type: "list",
+          message: "Which employee do you want to add?",
+          name: "employee",
+          choices: ["intern", "engineer", "manager", "exit"]
+        }])
+      //inquirer end
+    }
+  // asks user which employee type to add
 
-      this.engineer = this.employeeQuestions.concat([{
-        type: "input",
-        message: "What is the engineer's GitHub?",
-        name: "github"
-      }])
-
-      this.manager = this.employeeQuestions.concat([{
-        type: "input",
-        message: "What is the manager's office number?",
-        name: "officeNumber"
-      }])
-    // specific employee-type questions
-  }
-
-  async whichEmployee() {
-    return inquirer
-      .prompt([{
-        type: "list",
-        message: "Which employee do you want to add?",
-        name: "employee",
-        choices: ["intern", "engineer", "manager", "exit"]
-      }])
-    //inquirer end
-  }
 
   // asks user and returns array of employees
-  makeEmployeeArray() {
-    let boolContinue = true;
-    let employeeArr = [];
-    let ans;
-    while (boolContinue) {
-      ans = this.whichEmployee();
-      if (ans === "exit") {
-        boolContinue = false;
-        return employeeArr;
-      } else {
-        employeeArr.push(ans.employee);
+    makeEmployeeArray() {
+      let boolContinue = true;
+      let employeeArr = [];
+      let ans;
+      while (boolContinue) {
+        ans = this.whichEmployee();
+        if (ans === "exit") {
+          boolContinue = false;
+          return employeeArr;
+        } else {
+          employeeArr.push(ans.employee);
+        }
       }
     }
-  }
   // asks user and returns array of employees
 
   // intakes employee array and asks questions based on employee
-  async askUserEmployeeQuestions(employeeArrIndex) {
-    let questions = {};
-    if (employeeArrIndex === "intern") {
-      questions = this.intern;
-    } else if (employeeArrIndex === "engineer") {
-      questions = this.engineer;
-    } else if (employeeArrIndex === "manager") {
-      questions = this.manager;
+    async askQuestions(employeeArrIndex) {
+      let questions = {};
+      if (employeeArrIndex === "intern") {
+        questions = this.intern;
+      } else if (employeeArrIndex === "engineer") {
+        questions = this.engineer;
+      } else if (employeeArrIndex === "manager") {
+        questions = this.manager;
+      }
+      
+      return inquirer
+        .prompt(questions)
+      //inquirer end
     }
-    
-    return inquirer
-      .prompt(questions)
-    //inquirer end
-  }
   // intakes employee array and asks questions based on employee
 
+  // intakes employee array and returns answers to questions
+    makeAnswerArray(employeeArr) {
+      let answersArray = [];
+      let ans;
+      for (let i = 0; i < employeeArr.length; i++) {
+        ans = this.askQuestions(employeeArr[i]);
+        if (ans === exit) {
+          return answersArray;
+        } else if (ans === "intern") {
+          answersArray.concat(ans)
+        }
+      }
+    }
+  // intakes employee array and returns answers to questions
 
+  
 
 
 }
