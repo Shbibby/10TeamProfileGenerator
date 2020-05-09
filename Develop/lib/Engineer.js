@@ -8,7 +8,7 @@ class Engineer extends Employee {
     this.github = github;
   }
 
-  // ovverrides Employee.js getRole
+  // overrides Employee.js getRole
   getRole() {
     return "Engineer";
   }

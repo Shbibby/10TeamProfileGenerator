@@ -8,7 +8,7 @@ class Intern extends Employee {
     this.school = school;
   }
 
-  // ovverrides Employee.js getRole
+  // overrides Employee.js getRole
   getRole() {
     return "Intern";
   }
