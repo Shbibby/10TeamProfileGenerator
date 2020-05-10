@@ -397,8 +397,8 @@ async function doStuff() {
   ]
 
   const askUser = new AskInfo();
-    const teamArr = await askUser.makeEmployeeArray();
-    const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
+    const teamArr = await askUser.makeEmployeeArray();//--------------------comment out for dummyArr
+    const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);// comment out for dummyArr
       // console.log(answerTeamArrQuestion);
       const organizeAnsArr = askUser.organizeArray(answerTeamArrQuestion); // pass dummyArr for quick testing
         // console.log(organizeAnsArr);
