@@ -229,6 +229,7 @@ class AskInfo {
     }
   // takes answer array and organizes for html processing
 
+  // takes organzied array and employee type and returns html for all employees of that type
     makeHtmlText(array, type) {
       let typeText = ""; 
         let intern = `School : `;
@@ -261,7 +262,10 @@ class AskInfo {
 
         `
       }
+      return returnString;
     }
+  // takes organzied array and employee type and returns html for all employees of that type
+
 
   // creates html
     makeHtml(organizedAnswersArr) {
@@ -269,6 +273,11 @@ class AskInfo {
       let engineerArr = organizedAnswersArr[1];
       let managerArr = organizedAnswersArr[2];
       
+      let engineerHtml = this.makeHtmlText(engineerArr, "engineer");
+      let internHtml = this.makeHtmlText(internArr, "intern");
+      let managerHtml = this.makeHtmlText(managerArr, "manager");
+
+
       const finishedHtml = `
       <!DOCTYPE html>
       <html lang="en">
@@ -289,26 +298,26 @@ class AskInfo {
             <!-- Software team header -->
             <div class="card-body">
               <h5 class="card-title">Software Engineering Team</h5>
-              <p class="card-text">below is the name, role, ID, and other information based off entered team</p>
+              <p class="card-text">below are the names, roles, ID's, and other information based off entered team</p>
             </div>
             <!-- Software team header -->
 
             <!-- Engineer employee template -->
             <div class="card-footer"><i>Engineers</i></div>
 
-            
+            ${engineerHtml}
             <!-- Engineer employee template -->
 
             <!-- Interns employee template -->
             <div class="card-footer"><i>Interns</i></div>
             
-            
+            ${internHtml}
             <!-- Interns employee template -->
 
             <!-- Manager employee template -->
             <div class="card-footer"><i>Managers</i></div>
 
-            
+            ${managerHtml}
             <!-- Manager employee template -->
 
           </div>
