@@ -61,8 +61,8 @@ class AskInfo {
         this.internHtmlTemplate = `
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Intern Name</h5>
-            <h6 class="card-subtitle mb-2 text-muted">ID :</h6>
+            <h5 class="card-title"></h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID : </h6>
             <h6 class="card-subtitle mb-2 text-muted">Email : </h6>
             <h6 class="card-subtitle mb-2 text-muted">School : </h6>
           </div>
@@ -92,51 +92,52 @@ class AskInfo {
         `
 
         this.wholeHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <!-- Bootstrap 4.4.x -->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
-  
-  <title>test html</title>
-</head>
-<body>
-  <div class="container">
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            <!-- Bootstrap 4.4.x -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+            
+            <title>test html</title>
+          </head>
 
-    <div class="card text-center mt-4">
-      <!-- Software team header -->
-      <div class="card-body">
-        <h5 class="card-title">Software Engineering Team</h5>
-        <p class="card-text">below is the name, role, ID, and other information based off entered team</p>
-      </div>
-      <!-- Software team header -->
+          <body>
+            <div class="container">
 
-      <!-- Engineer employee template -->
-      <div class="card-footer"><i>Engineers</i></div>
+              <div class="card text-center mt-4">
+                <!-- Software team header -->
+                <div class="card-body">
+                  <h5 class="card-title">Software Engineering Team</h5>
+                  <p class="card-text">below is the name, role, ID, and other information based off entered team</p>
+                </div>
+                <!-- Software team header -->
 
-
-      <!-- Engineer employee template -->
-
-      <!-- Interns employee template -->
-      <div class="card-footer"><i>Interns</i></div>
-      
-
-      <!-- Interns employee template -->
-
-      <!-- Manager employee template -->
-      <div class="card-footer"><i>Managers</i></div>
+                <!-- Engineer employee template -->
+                <div class="card-footer"><i>Engineers</i></div>
 
 
-      <!-- Manager employee template -->
+                <!-- Engineer employee template -->
 
-    </div>
+                <!-- Interns employee template -->
+                <div class="card-footer"><i>Interns</i></div>
+                
 
-  </div>
-</body>
-</html>
+                <!-- Interns employee template -->
+
+                <!-- Manager employee template -->
+                <div class="card-footer"><i>Managers</i></div>
+
+
+                <!-- Manager employee template -->
+
+              </div>
+
+            </div>
+          </body>
+          </html>
         `
       // htmlTemplates -----------------------------------------------------
     }
@@ -228,19 +229,147 @@ class AskInfo {
     }
   // takes answer array and organizes for html processing
 
-  // creates html
-    makeHtml() {
+    makeHtmlText(array, type) {
+      let typeText = ""; 
+        let intern = `School : `;
+        let engineer = `GitHub URL : `;
+        let manager = `Office Number : `;
+      let employeeText = "";
+      let returnString = "";
 
+      if (type === "intern") {
+        typeText = intern;
+        employeeText = array.school;
+      } else if (type === "engineer") {
+        typeText = engineer;
+        employeeText = array.github;
+      } else if (type === "manager") {
+        typeText = manager;
+        employeeText = array.officeNumber;
+      }
+
+      for (let i = 0; i < array.length; i++) {
+        returnString += `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${array.name}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID : ${array.id}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Email : ${array.email}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">${typeText}${employeeText}</h6>
+          </div>
+        </div>
+
+        `
+      }
+    }
+
+  // creates html
+    makeHtml(organizedAnswersArr) {
+      let internArr = organizedAnswersArr[0];
+      let engineerArr = organizedAnswersArr[1];
+      let managerArr = organizedAnswersArr[2];
+      
+      const finishedHtml = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Bootstrap 4.4.x -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+        
+        <title>test html</title>
+      </head>
+      
+      <body>
+        <div class="container">
+
+          <div class="card text-center mt-4">
+            <!-- Software team header -->
+            <div class="card-body">
+              <h5 class="card-title">Software Engineering Team</h5>
+              <p class="card-text">below is the name, role, ID, and other information based off entered team</p>
+            </div>
+            <!-- Software team header -->
+
+            <!-- Engineer employee template -->
+            <div class="card-footer"><i>Engineers</i></div>
+
+            
+            <!-- Engineer employee template -->
+
+            <!-- Interns employee template -->
+            <div class="card-footer"><i>Interns</i></div>
+            
+            
+            <!-- Interns employee template -->
+
+            <!-- Manager employee template -->
+            <div class="card-footer"><i>Managers</i></div>
+
+            
+            <!-- Manager employee template -->
+
+          </div>
+
+        </div>
+      </body>
+      </html>
+      `
     }
   // creates html
 
 }
 
 async function doStuff() {
+  let dummyArr = [
+    {
+      name: 'Josh',
+      id: 'Josh ID',
+      email: 'Josh Email',
+      school: 'Josh School'
+    },
+    {
+      name: 'Bill2',
+      id: 'Bill ID2',
+      email: 'Bill Email2',
+      officeNumber: 'Bill Office2'
+    },
+    {
+      name: 'Frank',
+      id: 'Frank ID',
+      email: 'Frank Email',
+      github: 'Frank GitHub'
+    },
+    {
+      name: 'Josh2',
+      id: 'Josh ID2',
+      email: 'Josh Email2',
+      school: 'Josh School2'
+    },
+
+    {
+      name: 'Bill',
+      id: 'Bill ID',
+      email: 'Bill Email',
+      officeNumber: 'Bill Office'
+    },
+    {
+      name: 'Frank2',
+      id: 'Frank ID2',
+      email: 'Frank Email2',
+      github: 'Frank GitHub2'
+    },
+  ]
   const askUser = new AskInfo();
-    const teamArr = await askUser.makeEmployeeArray();
-    const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
-    console.log(answerTeamArrQuestion);
+    // const teamArr = await askUser.makeEmployeeArray();
+    // const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
+    // console.log(answerTeamArrQuestion);
+    
+    const organizeAnsArr = askUser.organizeArray(dummyArr);
+    console.log(organizeAnsArr);
+
 }
 
 doStuff();
