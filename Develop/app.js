@@ -125,11 +125,25 @@ class AskInfo {
     }
   // intakes employee array and asks and returns answers to questions
 
-  // takes answer array and makes html pages 
-    makeHtml() {
-
+  // takes answer array and organizes for html processing
+    organizeArray(answerArray) {
+      let internArr = [];
+      let engineerArr = [];
+      let managerArr = [];
+      
+      for (let i = 0; i < answerArray.length; i++) {
+        if (answerArray[i].school !== undefined) {
+          internArr.push(answerArray[i])
+        } else if (answerArray[i].github !== undefined) {
+          engineerArr.push(answerArray[i])
+        } else if (answerArray[i].officeNumber !== undefined) {
+          managerArr.push(answerArray[i])
+        }
+      }
+      const organizedArr = [internArr, engineerArr, managerArr];
+      return organizedArr;
     }
-  // takes answer array and makes html pages 
+  // takes answer array and organizes for html processing
 
 }
 async function doStuff() {
