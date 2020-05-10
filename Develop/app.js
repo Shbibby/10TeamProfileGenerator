@@ -68,23 +68,24 @@ class AskInfo {
           name: "employee",
           choices: ["intern", "engineer", "manager", "exit"]
         }])
-      //inquirer end
     }
   // asks user which employee type to add
 
 
   // asks user and returns array of employees
-    makeEmployeeArray() {
+    async makeEmployeeArray() {
       let boolContinue = true;
       let employeeArr = [];
       let ans;
       while (boolContinue) {
-        ans = this.whichEmployee();
+        ans = (await this.whichEmployee()).employee;
+        console.log(ans);
         if (ans === "exit") {
+          employeeArr.push(ans);
           boolContinue = false;
           return employeeArr;
         } else {
-          employeeArr.push(ans.employee);
+          employeeArr.push(ans);
         }
       }
     }
@@ -99,6 +100,8 @@ class AskInfo {
         questions = this.engineer;
       } else if (employeeArrIndex === "manager") {
         questions = this.manager;
+      } else if (employeeArrIndex === "exit") {
+       return "exit";
       }
       
       return inquirer
@@ -107,30 +110,36 @@ class AskInfo {
     }
   // intakes employee array and asks questions based on employee
 
-  // intakes employee array and returns answers to questions
-    makeAnswerArray(employeeArr) {
+  // intakes employee array and asks and returns answers to questions
+    async makeAnswerArray(employeeArr) {
       let answersArray = [];
       let ans;
       for (let i = 0; i < employeeArr.length; i++) {
-        ans = this.askQuestions(employeeArr[i]);
-        if (ans === exit) {
+        ans = await this.askQuestions(employeeArr[i]);
+        if (ans === "exit") {
           return answersArray;
-        } else if (ans === "intern") {
-          answersArray.concat(ans)
+        } else {
+          answersArray.push(ans)
         }
       }
     }
-  // intakes employee array and returns answers to questions
+  // intakes employee array and asks and returns answers to questions
 
-  
+  // takes answer array and makes html pages 
+    makeHtml() {
 
+    }
+  // takes answer array and makes html pages 
 
 }
+async function doStuff() {
+  const askUser = new AskInfo();
+    const teamArr = await askUser.makeEmployeeArray();
+    const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
+    console.log(answerTeamArrQuestion);
+}
 
-
-const gh = new AskInfo();
-let op = gh.whichEmployee();
-console.log(op.employee);
+doStuff();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
