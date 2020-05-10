@@ -56,6 +56,89 @@ class AskInfo {
           name: "officeNumber"
         }])
       // specific employee-type questions
+
+      // htmlTemplates -----------------------------------------------------
+        this.internHtmlTemplate = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Intern Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID :</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Email : </h6>
+            <h6 class="card-subtitle mb-2 text-muted">School : </h6>
+          </div>
+        </div>
+        `
+
+        this.engineerHtmlTemplate = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Engineer Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID :</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Email : </h6>
+            <h6 class="card-subtitle mb-2 text-muted">GitHub URL : </h6>
+          </div>
+        </div>
+        `
+
+        this.managerHtmlTemplate = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Manager Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID :</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Email : </h6>
+            <h6 class="card-subtitle mb-2 text-muted">Office Number : </h6>
+          </div>
+        </div>
+        `
+
+        this.wholeHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Bootstrap 4.4.x -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+  
+  <title>test html</title>
+</head>
+<body>
+  <div class="container">
+
+    <div class="card text-center mt-4">
+      <!-- Software team header -->
+      <div class="card-body">
+        <h5 class="card-title">Software Engineering Team</h5>
+        <p class="card-text">below is the name, role, ID, and other information based off entered team</p>
+      </div>
+      <!-- Software team header -->
+
+      <!-- Engineer employee template -->
+      <div class="card-footer"><i>Engineers</i></div>
+
+
+      <!-- Engineer employee template -->
+
+      <!-- Interns employee template -->
+      <div class="card-footer"><i>Interns</i></div>
+      
+
+      <!-- Interns employee template -->
+
+      <!-- Manager employee template -->
+      <div class="card-footer"><i>Managers</i></div>
+
+
+      <!-- Manager employee template -->
+
+    </div>
+
+  </div>
+</body>
+</html>
+        `
+      // htmlTemplates -----------------------------------------------------
     }
   // constructor end
 
@@ -145,7 +228,14 @@ class AskInfo {
     }
   // takes answer array and organizes for html processing
 
+  // creates html
+    makeHtml() {
+
+    }
+  // creates html
+
 }
+
 async function doStuff() {
   const askUser = new AskInfo();
     const teamArr = await askUser.makeEmployeeArray();
