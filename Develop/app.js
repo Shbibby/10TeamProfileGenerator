@@ -163,7 +163,6 @@ class AskInfo {
       let ans;
       while (boolContinue) {
         ans = (await this.whichEmployee()).employee;
-        console.log(ans);
         if (ans === "exit") {
           employeeArr.push(ans);
           boolContinue = false;
@@ -267,7 +266,7 @@ class AskInfo {
   // takes organzied array and employee type and returns html for all employees of that type
 
 
-  // creates html
+  // creates html data
     makeHtml(organizedAnswersArr) {
       let internArr = organizedAnswersArr[0];
       let engineerArr = organizedAnswersArr[1];
@@ -328,7 +327,14 @@ class AskInfo {
       `
       return finishedHtml;
     }
-  // creates html
+  // creates html data
+
+  // makes html file
+    writeHtmlFile(htmlData) {
+      fs.writeFile("./output/team.html", htmlData, function(err) {if (err) throw err;});
+      console.log("-----File [team.html] has been written to [output] folder-----")
+    }
+  // makes html file
 
 }
 
@@ -341,10 +347,10 @@ async function doStuff() {
       school: 'Josh School'
     },
     {
-      name: 'Bill2',
-      id: 'Bill ID2',
-      email: 'Bill Email2',
-      officeNumber: 'Bill Office2'
+      name: 'Bill',
+      id: 'Bill ID',
+      email: 'Bill Email',
+      officeNumber: 'Bill Office'
     },
     {
       name: 'Frank',
@@ -353,54 +359,54 @@ async function doStuff() {
       github: 'Frank GitHub'
     },
     {
-      name: 'Josh2',
-      id: 'Josh ID2',
-      email: 'Josh Email2',
-      school: 'Josh School2'
-    },
-
-    {
-      name: 'Bill',
-      id: 'Bill ID',
-      email: 'Bill Email',
-      officeNumber: 'Bill Office'
-    },
-    {
       name: 'Frank2',
       id: 'Frank ID2',
       email: 'Frank Email2',
       github: 'Frank GitHub2'
     },
+    {
+      name: 'Josh2',
+      id: 'Josh ID2',
+      email: 'Josh Email2',
+      school: 'Josh School2'
+    },
+    {
+      name: 'Bill2',
+      id: 'Bill ID2',
+      email: 'Bill Email2',
+      officeNumber: 'Bill Office2'
+    },
+    {
+      name: 'Frank3',
+      id: 'Frank ID3',
+      email: 'Frank Email3',
+      github: 'Frank GitHub3'
+    },
+    {
+      name: 'Bill3',
+      id: 'Bill ID3',
+      email: 'Bill Email3',
+      officeNumber: 'Bill Office3'
+    },
+    {
+      name: 'Josh3',
+      id: 'Josh ID3',
+      email: 'Josh Email3',
+      school: 'Josh School3'
+    }
   ]
-  const askUser = new AskInfo();
-    // const teamArr = await askUser.makeEmployeeArray();
-    // const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
-    // console.log(answerTeamArrQuestion);
-    
-    const organizeAnsArr = askUser.organizeArray(dummyArr);
-    console.log(organizeAnsArr);
-  const makeNewHtml = askUser.makeHtml(organizeAnsArr);
-  console.log(makeNewHtml);
 
+  const askUser = new AskInfo();
+    const teamArr = await askUser.makeEmployeeArray();
+    const answerTeamArrQuestion = await askUser.makeAnswerArray(teamArr);
+      // console.log(answerTeamArrQuestion);
+      const organizeAnsArr = askUser.organizeArray(answerTeamArrQuestion); // pass dummyArr for quick testing
+        // console.log(organizeAnsArr);
+
+    const makeNewHtml = askUser.makeHtml(organizeAnsArr);
+      // console.log(makeNewHtml);
+      askUser.writeHtmlFile(makeNewHtml);
+  console.log("--------All done!--------")
 }
 
 doStuff();
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!```
