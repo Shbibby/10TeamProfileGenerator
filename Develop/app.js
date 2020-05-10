@@ -238,24 +238,24 @@ class AskInfo {
       let employeeText = "";
       let returnString = "";
 
-      if (type === "intern") {
-        typeText = intern;
-        employeeText = array.school;
-      } else if (type === "engineer") {
-        typeText = engineer;
-        employeeText = array.github;
-      } else if (type === "manager") {
-        typeText = manager;
-        employeeText = array.officeNumber;
-      }
-
       for (let i = 0; i < array.length; i++) {
+        if (type === "intern") {
+          typeText = intern;
+          employeeText = array[i].school;
+        } else if (type === "engineer") {
+          typeText = engineer;
+          employeeText = array[i].github;
+        } else if (type === "manager") {
+          typeText = manager;
+          employeeText = array[i].officeNumber;
+        }
+
         returnString += `
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">${array.name}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">ID : ${array.id}</h6>
-            <h6 class="card-subtitle mb-2 text-muted">Email : ${array.email}</h6>
+            <h5 class="card-title">${array[i].name}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID : ${array[i].id}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Email : ${array[i].email}</h6>
             <h6 class="card-subtitle mb-2 text-muted">${typeText}${employeeText}</h6>
           </div>
         </div>
@@ -326,6 +326,7 @@ class AskInfo {
       </body>
       </html>
       `
+      return finishedHtml;
     }
   // creates html
 
@@ -378,6 +379,8 @@ async function doStuff() {
     
     const organizeAnsArr = askUser.organizeArray(dummyArr);
     console.log(organizeAnsArr);
+  const makeNewHtml = askUser.makeHtml(organizeAnsArr);
+  console.log(makeNewHtml);
 
 }
 
